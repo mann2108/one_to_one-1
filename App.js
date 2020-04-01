@@ -1,6 +1,6 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet, Settings } from 'react-native';
 import AuthLoadingScreen from './screens/AuthLoadingScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -9,8 +9,10 @@ import ProfileScreen from './screens/ProfileScreen';
 import GroupChat from './screens/GroupChat';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-
-
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import Constants from 'expo-constants';
+import GroupChatShow from './screens/GroupChatShow';
 
 export default class App extends React.Component {
 
@@ -36,7 +38,8 @@ export default class App extends React.Component {
       Auth: AuthLoadingScreen,  //authloading
       Home: HomeScreen,  //app
       Group: GroupChat,
-      // Chat: ChatScreen, //app
+      GroupChat: GroupChatShow,
+      Chat: ChatScreen, //app
       // Profile: ProfileScreen,
       Login: LoginScreen, //auth
     }, {
@@ -63,3 +66,4 @@ export default class App extends React.Component {
     )
   }
 }
+

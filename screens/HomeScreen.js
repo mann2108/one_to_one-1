@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text, AsyncStorage, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler';
 import User from '../User';
 import firebase from 'firebase';
 import { SafeAreaView } from 'react-native';
-import { Image } from 'react-native';
-import { Header, Title } from 'native-base';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import { FloatingAction } from 'react-native-floating-action';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
 const actions = [
     {
@@ -36,19 +37,16 @@ const actions = [
         position: 4
     }
 ]
-export default class HomeScreen extends React.Component {
-    constructor(){
-        super()
-    }
+
+export class SingleChatView extends React.Component {
     state = {
-        users: []
+        users: [],
     }
 
     componentWillMount() {
         let dbRef = firebase.database().ref('users/')
         dbRef.on('child_added', (val) => {
             let person = val.val();
-            // console.log("component person ", val.key)
             person.phone = val.key;
             if (person.phone === User.phone) {
                 User.name = person.name
@@ -58,29 +56,25 @@ export default class HomeScreen extends React.Component {
                         users: [...prevState.users, person]
                     }
                 })
-                // console.log(users)
             }
         })
+        // console.log(this.state.users)
     }
 
     nextPage = async (item) => {
+        console.log('single chat next page called')
         this.props.navigation.navigate('Chat', item);
     }
-
     render() {
         return (
-            <SafeAreaView style={styles.droidSafeArea}>
-                <Header>
-                    <Title>Chat</Title>
-                </Header>
+            <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
-                    Style={{ marginTop: 50 }}
                     data={this.state.users}
                     renderItem={({ item }) => {
                         return (
                             <TouchableOpacity
                                 onPress={() => this.nextPage(item)}
-                                style={{ padding: 10, borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
+                                style={{ padding: 10, borderBottomColor: 'red', borderBottomWidth: 10 }}>
                                 <Text style={{ fontSize: 25 }}>{item.name}</Text>
                             </TouchableOpacity>
                         )
@@ -92,20 +86,100 @@ export default class HomeScreen extends React.Component {
                     actions={actions}
                     onPressItem={(name) => {
                         console.log(this.props.navigation.navigate('Group'))
+                        console.log(name)
                     }}
                 />
             </SafeAreaView>
 
-        );
+        )
     }
+}
+
+export class GroupChatView extends React.Component {
+    state = {
+        grp_users: []
+    }
+    componentWillMount() {
+        let grpRef = firebase.database().ref('users/' + User.phone).child('/Groups/')
+        grpRef.on('child_added', (val) => {
+            let grpKey = val.val();
+            this.setState((prevState) => {
+                return {
+                    grp_users: [...prevState.grp_users, grpKey]
+                }
+            });
+        })
+    }
+    nextPage(item) {
+        console.log('group chat next page called')
+        this.props.navigation.navigate('GroupChatShow', {item});
+    }
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+                <FlatList
+                    data={this.state.grp_users}
+                    renderItem={({ item }) => {
+                        return (
+                            <TouchableOpacity
+                                onPress={() => this.nextPage(item)}
+                                style={{ padding: 10, borderBottomColor: 'red', borderBottomWidth: 10 }}>
+                                <Text style={{ fontSize: 25 }}>{item.name}</Text>
+                            </TouchableOpacity>
+                        )
+                    }}
+                    keyExtractor={item => item.phone}
+                />
+            </SafeAreaView>
+        )
+    }
+}
+
+const Tab = createMaterialTopTabNavigator();
+
+export default function HomeScreen() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                initialRouteName="Home"
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+
+                        if (route.name === 'Chat') {
+                            iconName = focused
+                                ? 'ios-information-circle'
+                                : 'ios-information-circle-outline';
+                        } else if (route.name === 'Group Chat') {
+                            iconName = focused ? 'ios-list-box' : 'ios-list';
+                        }
+
+                        // You can return any component that you like here!
+                        return <Ionicons name={iconName} size={24} color={color} />;
+                    },
+                })}
+                tabBarOptions={{
+                    activeTintColor: 'blue',
+                    inactiveTintColor: 'grey',
+                    indicatorStyle: {
+                        backgroundColor: 'red'
+                    },
+                    showIcon: true,
+                    style: {
+                        backgroundColor: '#f2f2f2'
+                    }
+                }}
+            >
+                <Tab.Screen name="Chat" component={SingleChatView} />
+                <Tab.Screen name="Group Chat" component={GroupChatView} />
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#fff',
-        // alignItems: 'center',
-        // justifyContent: 'center',
         marginTop: 50,
     },
     droidSafeArea: {
@@ -113,7 +187,4 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingTop: Constants.statusBarHeight
     },
-    // headstyl:{
-    //     fontFamily: "calibri"
-    // }
 });

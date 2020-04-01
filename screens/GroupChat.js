@@ -23,6 +23,7 @@ export default class GroupChat extends Component {
         })
         this.checknames(phone_nb, name_nb);
     }
+
     checknames(phone_nb, name_nb) {
         var temp = this.state.items;
         for (var i = 0; i < phone_nb.length; i++) {
@@ -31,6 +32,7 @@ export default class GroupChat extends Component {
         this.setState({ items: temp })
         // console.log(this.state.items)
     }
+
     onSelectedItemsChange = selectedItems => {
         this.setState({ selectedItems });
     };
@@ -43,14 +45,19 @@ export default class GroupChat extends Component {
             firebase.database().ref("users/" + this.state.selectedItems[i]).child("Groups/").push()
                 .update(
                     {
-                        GroupName: this.state.group_name,
+                        name: this.state.group_name,
                         createdAt: new Date(),
                         createdBy: User.phone,
                     }
-            )
+                )
         }
-
+        alert("Group Created Successfully");
+        this.setState({
+            group_name:"",
+            selectedItems:[]
+        })
     }
+
     render() {
         const { selectedItems } = this.state;
         return (
@@ -84,12 +91,12 @@ export default class GroupChat extends Component {
                 />
                 <View style={{ marginLeft: 10, marginRight: 10 }}>
                     {this.multiSelect ? this.multiSelect.getSelectedItemsExt(selectedItems) : null}
-                    {/* {console.log(this.state.selectedItems)} */}
                 </View>
 
                 <Button onPress={() => this.nxtPage()}>
                     <Text>Submit Button To Next Page</Text>
                 </Button>
+                <Text>{User.name}</Text>
             </View>
 
         )

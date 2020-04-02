@@ -4,7 +4,7 @@ import User from '../User';
 import firebase, { apps } from 'firebase';
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCSNJtalNlaVLmCF13xO37x7NcQbv4UX1Q",
+    apiKey: "*****************************************",
     authDomain: "chat-application-1ac4e.firebaseapp.com",
     databaseURL: "https://chat-application-1ac4e.firebaseio.com",
     projectId: "chat-application-1ac4e",

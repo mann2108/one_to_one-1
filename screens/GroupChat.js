@@ -41,16 +41,19 @@ export default class GroupChat extends Component {
         var phn_id = [];
         phn_id.push(this.state.selectedItems)
         console.log(phn_id)
+        var time = new Date();
         for (let i = 0; i < this.state.selectedItems.length; i++) {
             firebase.database().ref("users/" + this.state.selectedItems[i]).child("Groups/").push()
                 .update(
                     {
                         name: this.state.group_name,
-                        createdAt: new Date(),
+                        createdAt: time,
                         createdBy: User.phone,
                     }
                 )
         }
+        // firebase.database().ref('messages/').child('GroupChat/').child(this.state.group_name+time)
+        
         alert("Group Created Successfully");
         this.setState({
             group_name:"",

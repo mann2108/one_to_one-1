@@ -38,7 +38,7 @@ export default class App extends React.Component {
       Auth: AuthLoadingScreen,  //authloading
       Home: HomeScreen,  //app
       Group: GroupChat,
-      GroupChat: GroupChatShow,
+      GroupChatView: GroupChatShow,
       Chat: ChatScreen, //app
       // Profile: ProfileScreen,
       Login: LoginScreen, //auth

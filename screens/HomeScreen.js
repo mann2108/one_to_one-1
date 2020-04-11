@@ -11,6 +11,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
+var nav;
+
 const actions = [
     {
         text: "Create Group",
@@ -58,12 +60,11 @@ export class SingleChatView extends React.Component {
                 })
             }
         })
-        // console.log(this.state.users)
     }
 
     nextPage = async (item) => {
         console.log('single chat next page called')
-        this.props.navigation.navigate('Chat', item);
+        nav.navigate('Chat', item);
     }
     render() {
         return (
@@ -85,12 +86,11 @@ export class SingleChatView extends React.Component {
                     ref={(ref) => { this.floatingAction = ref; }}
                     actions={actions}
                     onPressItem={(name) => {
-                        console.log(this.props.navigation.navigate('Group'))
+                        console.log(nav.navigate('Group'))
                         console.log(name)
                     }}
                 />
             </SafeAreaView>
-
         )
     }
 }
@@ -112,7 +112,8 @@ export class GroupChatView extends React.Component {
     }
     nextPage(item) {
         console.log('group chat next page called')
-        this.props.navigation.navigate('GroupChatShow', {item});
+        console.log(nav)
+        console.log(nav.navigate('GroupChatView'))
     }
     render() {
         return (
@@ -137,11 +138,14 @@ export class GroupChatView extends React.Component {
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
+    // console.log(navigation)
+    nav = navigation
+    // console.log(nav)
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName="Home"
+                initialRouteName="Chat"
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -150,7 +154,7 @@ export default function HomeScreen() {
                             iconName = focused
                                 ? 'ios-information-circle'
                                 : 'ios-information-circle-outline';
-                        } else if (route.name === 'Group Chat') {
+                        } else if (route.name === 'Groups') {
                             iconName = focused ? 'ios-list-box' : 'ios-list';
                         }
 
@@ -170,8 +174,8 @@ export default function HomeScreen() {
                     }
                 }}
             >
-                <Tab.Screen name="Chat" component={SingleChatView} />
-                <Tab.Screen name="Group Chat" component={GroupChatView} />
+                <Tab.Screen name="Chat" component={SingleChatView} nav={navigation}/>
+                <Tab.Screen name="Groups" component={GroupChatView} nav={navigation}/>
             </Tab.Navigator>
         </NavigationContainer>
     );

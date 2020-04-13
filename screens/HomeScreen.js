@@ -64,11 +64,13 @@ export class SingleChatView extends React.Component {
 
     nextPage = async (item) => {
         console.log('single chat next page called')
+        // console.log(item)
         nav.navigate('Chat', item);
     }
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
+                <Text>{User.name}</Text>
                 <FlatList
                     data={this.state.users}
                     renderItem={({ item }) => {
@@ -111,9 +113,10 @@ export class GroupChatView extends React.Component {
         })
     }
     nextPage(item) {
-        console.log('group chat next page called')
-        console.log(nav)
-        console.log(nav.navigate('GroupChatView'))
+        // console.log('group chat next page called')
+        // console.log(nav)
+        // console.log(item)
+        nav.navigate('GroupChatView',item)
     }
     render() {
         return (

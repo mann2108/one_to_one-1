@@ -33,7 +33,8 @@ export default class ChatScreen extends React.Component {
                     messageList: [...prevState.messageList, value.val()]
                 }
             });
-        })
+        });
+        console.log(this.state.messageList)
     }
 
     handleChange = key => val => {
@@ -51,7 +52,7 @@ export default class ChatScreen extends React.Component {
 
     sendMessage = async () => {
         if (this.state.textMessage.length > 0) {
-            let msgId = firebase.database().ref('messaages').child(User.phone).child(this.state.person.phone).push().key;
+            let msgId = firebase.database().ref('messages').child(User.phone).child(this.state.person.phone).push().key;
             let updates = {};
             let message = {
                 message: this.state.textMessage,

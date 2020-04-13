@@ -42,22 +42,42 @@ export default class GroupChat extends Component {
         phn_id.push(this.state.selectedItems)
         console.log(phn_id)
         var time = new Date();
+        var date = new Date().getDate();
+        var mon = new Date().getMonth();
+        var yr = new Date().getFullYear();
+        var hrs = new Date().getHours();
+        var mins = new Date().getMinutes();
+        var sec = new Date().getSeconds();
+        hrs = hrs % 12;
+        hrs = hrs.toString();
+        sec = sec.toString();
+        date = date.toString();
+        mon = mon.toString();
+        yr = yr.toString();
+        var time = hrs + ":" + mins + ":" + sec;
+        var day = date + "/" + mon + "/" + yr
+        var db_dt = date + ':' + mon + ':' + yr;
+        var db_gpName = this.state.group_name + time + " "+ db_dt;
         for (let i = 0; i < this.state.selectedItems.length; i++) {
             firebase.database().ref("users/" + this.state.selectedItems[i]).child("Groups/").push()
                 .update(
                     {
                         name: this.state.group_name,
-                        createdAt: time,
+                        createdDay: day,
+                        createdTime: time,
                         createdBy: User.phone,
+                        db_Gname: db_gpName
                     }
                 )
+
         }
-        // firebase.database().ref('messages/').child('GroupChat/').child(this.state.group_name+time)
-        
+        firebase.database().ref('messages/').child('groupChat/' + db_gpName).update({
+            defaultvalue: '1000',
+        })
         alert("Group Created Successfully");
         this.setState({
-            group_name:"",
-            selectedItems:[]
+            group_name: "",
+            selectedItems: []
         })
     }
 
@@ -100,6 +120,9 @@ export default class GroupChat extends Component {
                     <Text>Submit Button To Next Page</Text>
                 </Button>
                 <Text>{User.name}</Text>
+                <Button onPress={() => { this.props.navigation.navigate('Home') }}>
+                    <Text>Go Back</Text>
+                </Button>
             </View>
 
         )

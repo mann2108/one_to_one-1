@@ -5,54 +5,39 @@ import { SafeAreaView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants'
-import { Header, Left, Title } from 'native-base';
-import {Image} from 'react-native';
-
+import { Header, Left, Title, Button } from 'native-base';
+import { Image } from 'react-native';
+import firebase from 'firebase';
 
 
 export default class ProfileScreen extends React.Component {
-    // state = {
-    //     name: '',
-    // }
-
-    // handleChange = key => val => {
-    //     this.setState({ [key]: val })
-    // }
-    // _logOut = async () => {
-    //     await AsyncStorage.clear();
-    //     this.props.navigation.navigate('Login');
-    // }
-
+    logout = () =>{
+        alert('Jeet is here')
+    }
     render() {
         return (
-            <SafeAreaView style={styles.droidSafeArea}>
-                {/* <Header style={{backgroundColor: '#900C3F',borderBottomColor:'#900C3F', paddingTop: Constants.statusBarHeight}}>
-                    <Left style={{flexDirection:'row',marginLeft:-200}}>
-                        <Image
-                        source={require('../images/account.png')}
-                        style={{width:32,height:32}}
-                        />
-                        <Title style={{marginLeft:15,fontSize:24,color:'white'}}>Profile</Title>
+            <SafeAreaView>
+                <Header style={{ backgroundColor: '#900C3F', borderBottomColor: '#900C3F', marginTop: '-.1%' }}>
+                    <Left style={{ flexDirection: 'row', marginLeft: '-42%' }}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+                            <Image
+                                source={require('../images/back.png')}
+                                style={{ width: 32, height: 32 }}
+                            />
+                        </TouchableOpacity>
+
+                        <Title style={{ marginLeft: 15, fontSize: 24, color: 'white', marginTop: '-2%' }}>Profile</Title>
                     </Left>
-                </Header> */}
-                {/* <View style={styles.container}> */}
-                    {/* <Text style={{alignItems:'center',fontSize:20,margin:-10}}> */}
-                        {/* {this.props.navigation.getParam('nxt_nm')}
-                        {this.props.navigation.getParam('nxt_ph')} */}
-                        {/* {User.name}{'\n'} */}
-                    {/* </Text> */}
-                    {/* <Text style={{alignItems:'center',fontSize:20,margin:-10}}> */}
-                        {/* {this.props.navigation.getParam('nxt_nm')}
-                        {this.props.navigation.getParam('nxt_ph')} */}
-                        {/* {User.phone}{'\n'} */}
-                    {/* </Text> */}
-                    {/* <TouchableOpacity onPress={this._logOut} */}
-                        {/* style={{ marginTop: 505 }} */}
-                    {/* > */}
-                        {/* <Text>Logout</Text> */}
-                    {/* </TouchableOpacity> */}
-                {/* </View> */}
-                <Text>In Profile</Text>
+                </Header>
+                <View style={styles.container}>
+                    <Text style={{ alignItems: 'center', fontSize: 20, marginTop: 450 }}>
+                        <Text>User Name : <Text style={{ fontWeight: 'bold' }}>{User.name}{'\n'}</Text></Text>
+                        <Text>User Phone: <Text style={{ fontWeight: 'bold' }}>{User.phone}{'\n'}</Text></Text>
+                    </Text>
+                </View>
+                <Button style={{ marginTop: '120%', backgroundColor: '#900C3F' }} onPress={() => this.logout}>
+                    <Text style={{ flex: 1, fontSize: 29, left: 155, marginTop: '7%' ,color:'white'}}>Logout</Text>
+                </Button>
             </SafeAreaView>
 
         )
@@ -70,6 +55,6 @@ const styles = StyleSheet.create({
     droidSafeArea: {
         flex: 1,
         backgroundColor: '#900C3F',
-        paddingTop: Constants.statusBarHeight
+        marginTop: Constants.statusBarHeight
     }
 });

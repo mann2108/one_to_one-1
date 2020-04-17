@@ -40,7 +40,7 @@ export default class App extends React.Component {
       Group: GroupChat,
       GroupChatView: GroupChatShow,
       Chat: ChatScreen, //app
-      // Profile: ProfileScreen,
+      Profile: ProfileScreen,
       Login: LoginScreen, //auth
     }, {
       initialRouteName: "Auth",

@@ -92,21 +92,21 @@ export default class ChatScreen extends React.Component {
         let { height, width } = Dimensions.get('window');
         if (Platform.OS === 'android') {
             return (
-                <KeyboardAvoidingView style={{flex:1,paddingTop:Constants.statusBarHeight}} behavior="padding" keyboardVerticalOffset={0} enabled>
-                    <Header>
-                        {/* <Left>
-                            <TouchableOpacity onPress={this.props.navigation.navigate('Home')}>
+                <KeyboardAvoidingView style={{ flex: 1, paddingTop: Constants.statusBarHeight }} keyboardVerticalOffset={0} enabled>
+                    <Header style={{ backgroundColor: 'cream', marginTop: '-8.4%', marginBottom: '-1%', flexDirection: 'row' }}>
+                        <Left style={{ marginTop: '10%' }}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
                                 <Image
                                     source={require('../images/back.png')}
                                     style={{ width: 32, height: 28 }}
                                 />
                             </TouchableOpacity>
-                        </Left> */}
-                        <Body>
+                        </Left>
+                        <Body style={{ marginTop: '9%' }}>
                             <Title style={{ color: "black", marginLeft: -27, fontSize: 23 }}>{this.props.navigation.getParam('name')}</Title>
                         </Body>
 
-                        <Right>
+                        <Right style={{ marginTop: '10%' }}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
                                 nxt_nm: this.props.navigation.getParam('name'),
                                 nxt_ph: this.props.navigation.getParam('phone')
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         width: '83%',
         margin: 1,
-        marginLeft:2,
+        marginLeft: 2,
         borderRadius: 5,
     },
     btnText: {

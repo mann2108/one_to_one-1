@@ -82,7 +82,7 @@ export default class GroupChatShow extends React.Component {
 
                     <Text style={{ padding: 7, fontSize: 16, color: 'black' }}>
                         <Text>
-                            {item.from + '\n'}
+                            {item.from + '\n' + this.mainChat(item.from)}
                         </Text>
                         <Text>
                             {item.message}

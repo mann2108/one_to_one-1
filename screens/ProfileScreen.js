@@ -10,10 +10,8 @@ import { Image } from "react-native";
 import firebase from "firebase";
 
 export default class ProfileScreen extends React.Component {
-  logout = async () => {
+  logout = () => {
     alert("Jeet is here");
-    AsyncStorage.clear();
-    firebase.auth.signOut();
   };
   render() {
     return (
@@ -68,8 +66,6 @@ export default class ProfileScreen extends React.Component {
         <Button
           style={{ marginTop: "120%", backgroundColor: "#900C3F" }}
           onPress={() => {
-            AsyncStorage.clear();
-            firebase.auth.signOut();
             this.props.navigation.navigate("Login");
           }}
         >

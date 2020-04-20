@@ -10,8 +10,10 @@ import { Image } from "react-native";
 import firebase from "firebase";
 
 export default class ProfileScreen extends React.Component {
-  logout = () => {
+  logout = async () => {
     alert("Jeet is here");
+    AsyncStorage.clear();
+    firebase.auth.signOut();
   };
   render() {
     return (

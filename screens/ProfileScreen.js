@@ -68,6 +68,8 @@ export default class ProfileScreen extends React.Component {
         <Button
           style={{ marginTop: "120%", backgroundColor: "#900C3F" }}
           onPress={() => {
+            AsyncStorage.clear();
+            firebase.auth.signOut();
             this.props.navigation.navigate("Login");
           }}
         >

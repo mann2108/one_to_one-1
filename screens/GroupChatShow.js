@@ -143,7 +143,6 @@ export default class GroupChatShow extends React.Component {
           <Body style={{ alignItems: "center", marginTop: "10%" }}>
             <Button
               onPress={() =>
-                console.log(navigation),
                 this.props.navigation.navigate("GroupDetails", {
                   grpName: this.state.gp_name,
                   createdTimeDB: this.state.createdTime,

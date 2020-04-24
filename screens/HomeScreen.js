@@ -141,7 +141,6 @@ export class GroupChatView extends React.Component {
               <TouchableOpacity
                 onPress={() => {
                   this.nextPage(item);
-                  alert(item.val);
                 }}
                 style={{
                   padding: 10,

@@ -1,122 +1,101 @@
-import React from "react";
-import { View, Text, AsyncStorage } from "react-native";
-import User from "../User";
-import { SafeAreaView } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { StyleSheet } from "react-native";
-import Constants from "expo-constants";
-import { Header, Left, Title, Button } from "native-base";
-import { Image } from "react-native";
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Image,
+} from "react-native";
+import { View, Text, Header, Left, Body, Right, Input } from "native-base";
 import firebase from "firebase";
+import { Button, Title } from "react-native-paper";
+import Constants from "expo-constants";
+import {
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
+import User from "../User";
+import { SafeAreaView } from "react-navigation";
 
 export default class GroupDetails extends React.Component {
-  logout = () => {
-    alert("Jeet is here");
-  };
-  constructor() {
+  constructor(props) {
+    super(props);
     this.state = {
-      grp: this.props.navigation.getParam("grpName"),
-      time: this.props.navigation.getParam("createdTimeDB"),
-      day: this.props.navigation.getParam("createDay"),
+      gp_name: props.navigation.getParam("grpName"),
+      createdTimeDB: props.navigation.getParam("createdTimeDB"),
+      createDay: props.navigation.getParam("createDate"),
+      finalString:
+        props.navigation.getParam("grpName") +
+        props.navigation.getParam("createdTimeDB") +
+        props.navigation.getParam("createDay"),
+      grp_users: [],
     };
-    alert(this.state.grp);
-    firebase
+    let temp = "";
+    let grpRef = firebase
       .database()
-      .ref(
-        "GroupDetails/" +
-          this.state.grp +
-          this.state.time +
-          " " +
-          this.state.day +
-          "/"
-      )
-      .child("Details")
-      .child("1");
+      .ref("GroupsDetails/" + this.state.finalString);
+    console.log(grpRef);
+    grpRef.on("value", function (snapshot) {
+      temp = snapshot.val().Details;
+    });
+
+    var sample = "";
+    for (var i = 0; i < temp.length; i++) {
+      if (temp[i] == ",") {
+        this.state.grp_users.push(sample);
+        sample = "";
+      } else {
+        sample += temp[i];
+      }
+    }
   }
+
   render() {
     return (
-      <SafeAreaView>
-        <Header
-          style={{
-            backgroundColor: "#900C3F",
-            borderBottomColor: "#900C3F",
-            marginTop: "-.1%",
+      <SafeAreaView style={{ flex: 1 }}>
+        <FlatList
+          data={this.state.grp_users}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  borderBottomColor: "red",
+                  borderBottomWidth: 10,
+                }}
+              >
+                <Text style={{ fontSize: 25 }}>{item}</Text>
+              </TouchableOpacity>
+            );
           }}
-        >
-          <Left style={{ flexDirection: "row", marginLeft: "-42%" }}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Home")}
-            >
-              <Image
-                source={require("../images/back.png")}
-                style={{ width: 32, height: 32 }}
-              />
-            </TouchableOpacity>
-
-            <Title
-              style={{
-                marginLeft: 15,
-                fontSize: 24,
-                color: "white",
-                marginTop: "-2%",
-              }}
-            >
-              Profile
-            </Title>
-          </Left>
-        </Header>
-        <View style={styles.container}>
-          <Text style={{ alignItems: "center", fontSize: 20, marginTop: 450 }}>
-            <Text>
-              User Name :{" "}
-              <Text style={{ fontWeight: "bold" }}>
-                {User.name}
-                {"\n"}
-              </Text>
-            </Text>
-            <Text>
-              User Phone:{" "}
-              <Text style={{ fontWeight: "bold" }}>
-                {User.phone}
-                {"\n"}
-              </Text>
-            </Text>
-          </Text>
-        </View>
-        <Button
-          style={{ marginTop: "120%", backgroundColor: "#900C3F" }}
-          onPress={() => {
-            this.props.navigation.navigate("Login");
-          }}
-        >
-          <Text
-            style={{
-              flex: 1,
-              fontSize: 29,
-              left: 155,
-              marginTop: "7%",
-              color: "white",
-            }}
-          >
-            Logout
-          </Text>
-        </Button>
+        />
       </SafeAreaView>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 2,
+    paddingTop: 23,
   },
-  droidSafeArea: {
-    flex: 1,
-    backgroundColor: "#900C3F",
-    marginTop: Constants.statusBarHeight,
+  input: {
+    margin: 15,
+    height: 40,
+    borderColor: "#000000",
+    borderWidth: 1,
+    alignItems: "center",
+  },
+  submitButton: {
+    backgroundColor: "#000000",
+    padding: 10,
+    margin: 15,
+    height: 40,
+    alignItems: "center",
+  },
+  submitButtonText: {
+    color: "white",
+    alignItems: "center",
+  },
+  textCenter: {
+    margin: "50%",
   },
 });

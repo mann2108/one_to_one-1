@@ -44,7 +44,7 @@ export default class GroupChat extends Component {
     this.setState({ selectedItems });
   };
 
-  nxtPage() { 
+  nxtPage() {
     var phn_id = [];
     phn_id.push(this.state.selectedItems);
     console.log(phn_id);
@@ -61,15 +61,17 @@ export default class GroupChat extends Component {
     date = date.toString();
     mon = mon.toString();
     yr = yr.toString();
-    var time = hrs + ":" + mins + ":" + sec;
-    var day = date + "/" + mon + "/" + yr;
-    var db_dt = date + ":" + mon + ":" + yr;
-    var db_gpName = this.state.group_name + time + " " + db_dt;
+    var time = hrs + mins + sec;
+    var day = date + mon + yr;
+    var db_dt = date + mon + yr;
+    var db_gpName = this.state.group_name + time + db_dt;
     var newPostKey = firebase.database().ref().child("posts").push().key;
 
-    var listOfMembers = {};
+    var listOfMembers = "";
     for (let i = 0; i < phn_id.length; i++) {
-      listOfMembers[i + 1] = phn_id[i];
+      var temp = i;
+      temp.toString();
+      listOfMembers += phn_id[i].toString();
     }
     firebase
       .database()

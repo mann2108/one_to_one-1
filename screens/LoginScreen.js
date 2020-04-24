@@ -21,7 +21,6 @@ export default class LoginScreen extends React.Component {
   handleChange = (key) => (val) => {
     this.setState({ [key]: val });
   };
-
   submitform = async () => {
     if (this.state.phone.length < 10) {
       alert("enter proper phone number");
@@ -83,4 +82,3 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
-

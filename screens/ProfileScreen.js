@@ -18,7 +18,7 @@ export default class ProfileScreen extends React.Component {
       <SafeAreaView>
         <Header
           style={{
-            backgroundColor: "#900C3F",
+            backgroundColor: "#6855ab",
             borderBottomColor: "#900C3F",
             marginTop: "-.1%",
           }}
@@ -64,7 +64,7 @@ export default class ProfileScreen extends React.Component {
           </Text>
         </View>
         <Button
-          style={{ marginTop: "120%", backgroundColor: "#900C3F" }}
+          style={{ marginTop: "120%", backgroundColor: "#6855ab" }}
           onPress={() => {
             this.props.navigation.navigate("Login");
           }}

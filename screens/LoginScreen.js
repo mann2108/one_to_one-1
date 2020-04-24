@@ -21,12 +21,11 @@ export default class LoginScreen extends React.Component {
   handleChange = (key) => (val) => {
     this.setState({ [key]: val });
   };
-
   submitform = async () => {
-    if (this.state.phone.length < 10) {
-      alert("enter proper phone number");
-    } else if (this.state.name.length < 5) {
-      alert("enter proper name");
+    if (this.state.phone.length > 8) {
+      alert("Enter Proper ID number");
+    } else if (this.state.name.length < 3) {
+      alert("Enter Proper Name");
     } else {
       await AsyncStorage.setItem("userPhone", this.state.phone);
       await AsyncStorage.setItem("userName", this.state.name);
@@ -46,21 +45,23 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={{flex:.1, marginTop:-21,fontWeight:'bold',fontSize:30}}>Edsat</Text>
         <TextInput
-          placeholder="enter phone"
-          keyboardType="number-pad"
+          placeholder="Enter ID"
+          placeholderTextColor="black"
           style={styles.input}
           value={this.state.phone}
           onChangeText={this.handleChange("phone")}
         />
         <TextInput
-          placeholder="enter name"
+          placeholder="Enter Name"
+          placeholderTextColor="black"
           style={styles.input}
           value={this.state.name}
           onChangeText={this.handleChange("name")}
         />
-        <TouchableOpacity onPress={this.submitform}>
-          <Text>Enter</Text>
+        <TouchableOpacity onPress={this.submitform} style={{marginTop:23}}>
+          <Text style={{ fontSize:21}}>Enter</Text>
         </TouchableOpacity>
       </View>
     );
@@ -70,7 +71,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#a8b4f8',
     alignItems: "center",
     justifyContent: "center",
   },

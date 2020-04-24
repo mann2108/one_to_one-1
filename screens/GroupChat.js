@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native-gesture-handler";
 import User from "../User";
-import { Button } from "native-base";
+import { Button } from "react-native-paper";
 
 export default class GroupChat extends Component {
   constructor() {
@@ -153,7 +153,7 @@ export default class GroupChat extends Component {
             : null}
         </View>
 
-        <Button onPress={() => this.nxtPage()}>
+        {/* <Button onPress={() => this.nxtPage()}>
           <Text>Submit Button To Next Page</Text>
         </Button>
         <Text>{User.name}</Text>
@@ -163,7 +163,13 @@ export default class GroupChat extends Component {
           }}
         >
           <Text>Go Back</Text>
-        </Button>
+        </Button> */}
+        <Button onPress={() => this.nxtPage()} mode='outlined' style={{marginTop:90}}>
+                    <Text>Submit Button To Next Page</Text>
+                </Button>
+                <Button onPress={() => { this.props.navigation.navigate('Home') }} mode='outlined' style={{marginTop:70}}>
+                    <Text>Go Back</Text>
+                </Button>
       </View>
     );
   }

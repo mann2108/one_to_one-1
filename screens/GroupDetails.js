@@ -17,6 +17,9 @@ import {
 import User from "../User";
 import { SafeAreaView } from "react-navigation";
 
+var nav;
+
+
 export default class GroupDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +33,9 @@ export default class GroupDetails extends React.Component {
         props.navigation.getParam("createDay"),
       grp_users: [],
     };
+  }
+
+  componentWillMount(){
     let temp = "";
     let grpRef = firebase
       .database()
@@ -48,11 +54,26 @@ export default class GroupDetails extends React.Component {
         sample += temp[i];
       }
     }
+    this.state.grp_users.push(sample);
   }
 
   render() {
+    
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <Header style={{ marginTop: -33, backgroundColor: '#6855ab' }}>
+          <Left style={{ left: -60 }}>
+            <TouchableOpacity onPress={() => console.log(this.props.navigation.navigate('Home'))}>
+              <Image
+                source={require('../images/back.png')}
+
+              />
+            </TouchableOpacity>
+
+          </Left>
+          <Title style={{ left: -40, marginTop: 10 }}>{this.state.gp_name}</Title>
+        </Header>
+        <Text style={{ fontSize: 25, borderBottomColor: 'grey', borderBottomWidth: 1, marginBottom: 20,alignItems:'center', justifyContent:'center'}}>Group Members</Text>
         <FlatList
           data={this.state.grp_users}
           renderItem={({ item }) => {
@@ -60,8 +81,8 @@ export default class GroupDetails extends React.Component {
               <TouchableOpacity
                 style={{
                   padding: 10,
-                  borderBottomColor: "red",
-                  borderBottomWidth: 10,
+                  borderBottomColor: "grey",
+                  borderBottomWidth: 1,
                 }}
               >
                 <Text style={{ fontSize: 25 }}>{item}</Text>

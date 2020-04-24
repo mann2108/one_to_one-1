@@ -16,28 +16,16 @@ var nav;
 const actions = [
   {
     text: "Create Group",
-    icon: require("../images/account.png"),
+    icon: require("../images/group.png"),
     name: "bt_language",
-    position: 1,
-  },
-  {
-    text: "Accessibility",
+    position: 1
+},
+{
+    text:"Profile",
     icon: require("../images/account.png"),
-    name: "bt_accessibility",
-    position: 2,
-  },
-  {
-    text: "Location",
-    icon: require("../images/account.png"),
-    name: "bt_room",
-    position: 3,
-  },
-  {
-    text: "Video",
-    icon: require("../images/account.png"),
-    name: "bt_videocam",
-    position: 4,
-  },
+    name:"profile",
+    position:2
+}
 ];
 
 export class SingleChatView extends React.Component {
@@ -71,8 +59,7 @@ export class SingleChatView extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text>{User.name}</Text>
+      <SafeAreaView style={{ flex: 1, backgroundColor:'#b7bff4' }}>
         <FlatList
           data={this.state.users}
           renderItem={({ item }) => {
@@ -81,8 +68,8 @@ export class SingleChatView extends React.Component {
                 onPress={() => this.nextPage(item)}
                 style={{
                   padding: 10,
-                  borderBottomColor: "red",
-                  borderBottomWidth: 10,
+                  borderBottomColor: "grey",
+                  borderBottomWidth: 1,
                 }}
               >
                 <Text style={{ fontSize: 25 }}>{item.name}</Text>
@@ -97,7 +84,12 @@ export class SingleChatView extends React.Component {
           }}
           actions={actions}
           onPressItem={(name) => {
-            console.log(nav.navigate("Group"));
+            if(name == "profile"){
+              nav.navigate('Profile')
+          }
+          else{
+              nav.navigate('Group')
+          }
             console.log(name);
           }}
         />
@@ -133,7 +125,7 @@ export class GroupChatView extends React.Component {
   }
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor:'#b7bff4' }}>
         <FlatList
           data={this.state.grp_users}
           renderItem={({ item }) => {
@@ -144,8 +136,8 @@ export class GroupChatView extends React.Component {
                 }}
                 style={{
                   padding: 10,
-                  borderBottomColor: "red",
-                  borderBottomWidth: 10,
+                  borderBottomColor: "grey",
+                  borderBottomWidth: 1,
                 }}
               >
                 <Text style={{ fontSize: 25 }}>{item.name}</Text>
@@ -193,7 +185,7 @@ export default function HomeScreen({ navigation }) {
           },
           showIcon: true,
           style: {
-            backgroundColor: "#f2f2f2",
+            backgroundColor: "#b7bff4",
           },
         }}
       >

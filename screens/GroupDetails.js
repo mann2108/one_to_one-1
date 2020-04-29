@@ -35,12 +35,12 @@ export default class GroupDetails extends React.Component {
     };
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     let temp = "";
     let grpRef = firebase
       .database()
       .ref("GroupsDetails/" + this.state.finalString);
-    console.log(grpRef);
+    // console.log(grpRef);
     grpRef.on("value", function (snapshot) {
       temp = snapshot.val().Details;
     });
@@ -85,7 +85,7 @@ export default class GroupDetails extends React.Component {
                   borderBottomWidth: 1,
                 }}
               >
-                <Text style={{ fontSize: 25 }}>{item}</Text>
+                <Text style={{ fontSize: 25 }}>{item}{console.log(item)}</Text>
               </TouchableOpacity>
             );
           }}

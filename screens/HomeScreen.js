@@ -125,7 +125,7 @@ export class GroupChatView extends React.Component {
   }
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor:'#b7bff4' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor:'white' }}>
         <FlatList
           data={this.state.grp_users}
           renderItem={({ item }) => {
@@ -161,22 +161,22 @@ export default function HomeScreen({ navigation }) {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Chat"
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+        // screenOptions={({ route }) => ({
+        //   tabBarIcon: ({ focused, color, size }) => {
+        //     let iconName;
 
-            if (route.name === "Chat") {
-              iconName = focused
-                ? "ios-information-circle"
-                : "ios-information-circle-outline";
-            } else if (route.name === "Groups") {
-              iconName = focused ? "ios-list-box" : "ios-list";
-            }
+        //     if (route.name === "Chat") {
+        //       iconName = focused
+        //         ? "ios-information-circle"
+        //         : "ios-information-circle-outline";
+        //     } else if (route.name === "Groups") {
+        //       iconName = focused ? "ios-list-box" : "ios-list";
+        //     }
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={24} color={color} />;
-          },
-        })}
+        //     // You can return any component that you like here!
+        //     return <Ionicons name={iconName} size={24} color={color} />;
+        //   },
+        // })}
         tabBarOptions={{
           activeTintColor: "blue",
           inactiveTintColor: "grey",
@@ -185,7 +185,7 @@ export default function HomeScreen({ navigation }) {
           },
           showIcon: true,
           style: {
-            backgroundColor: "#b7bff4",
+            backgroundColor: "white",
           },
         }}
       >
